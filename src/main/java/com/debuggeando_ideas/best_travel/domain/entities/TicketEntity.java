@@ -2,7 +2,8 @@ package com.debuggeando_ideas.best_travel.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import java.io.Serializable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -18,15 +19,21 @@ import lombok.Setter;
 @Getter
 @Builder(toBuilder = true)
 @Entity(name = "ticket")
-public class TicketEntity implements Serializable {
+public class TicketEntity {
 
     @Id
     private UUID id;
     private BigDecimal price;
-    private Long flyId;
-    private Long customerId;
     private LocalDate departureDate;
     private LocalDate arrivalDate;
     private LocalDate purchaseDate;
-    private Long tourId;
+    @ManyToOne
+    @JoinColumn(name = "fly_id", referencedColumnName = "id")
+    private FlyEntity fly;
+    @ManyToOne
+    @JoinColumn(name = "tour_id", referencedColumnName = "id")
+    private TourEntity tour;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "dni")
+    private CustomerEntity customer;
 }

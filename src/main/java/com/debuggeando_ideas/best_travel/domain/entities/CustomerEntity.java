@@ -1,13 +1,19 @@
 package com.debuggeando_ideas.best_travel.domain.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +35,31 @@ public class CustomerEntity {
     private Integer totalTours;
     @Column(length = 20)
     private String phoneNumber;
+    @ToString.Exclude // annotation to prevent infinite loops
+    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // load every representation of the ticket, not only the fly
+        orphanRemoval = true //if the fly is deleted, remove all the tickets
+    )
+    private Set<TicketEntity> tickets;
+    @ToString.Exclude // annotation to prevent infinite loops
+    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // load every representation of the ticket, not only the fly
+        orphanRemoval = true //if the fly is deleted, remove all the tickets
+    )
+    private Set<TourEntity> tours;
+    @ToString.Exclude // annotation to prevent infinite loops
+    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // load every representation of the ticket, not only the fly
+        orphanRemoval = true //if the fly is deleted, remove all the tickets
+    )
+    private Set<ReservationEntity> reservations;
 }
