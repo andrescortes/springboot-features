@@ -44,6 +44,7 @@ public class CustomerEntity {
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<TicketEntity> tickets;
+
     @ToString.Exclude // annotation to prevent infinite loops
     @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
     @OneToMany(
@@ -53,12 +54,13 @@ public class CustomerEntity {
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<TourEntity> tours;
+
     @ToString.Exclude // annotation to prevent infinite loops
     @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
     @OneToMany(
         mappedBy = "customer",
         cascade = CascadeType.ALL,
-        fetch = FetchType.EAGER, // load every representation of the ticket, not only the fly
+        fetch = FetchType.LAZY, // load every representation of the ticket, not only the fly
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<ReservationEntity> reservations;
