@@ -1,6 +1,7 @@
 package com.debuggeando_ideas.best_travel.domain.entities;
 
 import com.debuggeando_ideas.best_travel.util.AeroLineType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,11 +16,9 @@ import java.math.BigDecimal;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,8 +42,7 @@ public class FlyEntity {
     @Enumerated(EnumType.STRING)
     private AeroLineType aeroLine;
     private BigDecimal price;
-    @ToString.Exclude // annotation to prevent infinite loops
-    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @JsonIgnore
     @OneToMany(
         mappedBy = "fly",
         cascade = CascadeType.ALL,

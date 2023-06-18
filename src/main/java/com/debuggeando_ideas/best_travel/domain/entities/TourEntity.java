@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,11 +16,9 @@ import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,8 +31,7 @@ public class TourEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ToString.Exclude // annotation to prevent infinite loops
-    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @JsonIgnore
     @OneToMany(
         mappedBy = "tour",
         cascade = CascadeType.ALL,
@@ -41,8 +39,7 @@ public class TourEntity {
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<TicketEntity> tickets;
-    @ToString.Exclude // annotation to prevent infinite loops
-    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @JsonIgnore
     @OneToMany(
         mappedBy = "tour",
         cascade = CascadeType.ALL,

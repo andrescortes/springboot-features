@@ -1,13 +1,7 @@
-package com.debuggeando_ideas.best_travel.domain.entities;
+package com.debuggeando_ideas.best_travel.api.models.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,28 +16,16 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder(toBuilder = true)
-@Entity(name = "ticket")
-public class TicketEntity {
+public class TicketResponse {
 
-    @Id
     private UUID id;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime departureDate;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime arrivalDate;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime purchaseDate;
     private BigDecimal price;
-    @ManyToOne
-    @JoinColumn(name = "fly_id", referencedColumnName = "id")
-    private FlyEntity fly;
-    @ManyToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "id")
-    private TourEntity tour;
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "dni")
-    private CustomerEntity customer;
+    private FlyResponse fly;
+
 }

@@ -11,3 +11,6 @@ logging:
   level:
     org.hibernate.sql: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+server:
+  servlet:
+    context-path: /best_travel
