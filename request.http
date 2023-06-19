@@ -1,0 +1,20 @@
+### create Ticket
+POST {{host}}:{{port}}/{{contextPath}}/{{uri}}
+Content-Type: application/json
+
+{
+  "idClient": "{{idClient}}",
+  "idFly": {{idFly}}
+}
+
+### update Ticket
+PUT {{host}}:{{port}}/{{contextPath}}/{{uri}}/{{idTicket}}
+Content-Type: application/json
+
+{
+  "idClient": "{{idClient}}",
+  "idFly": 10
+}
+
+### getTicket
+GET {{host}}:{{port}}/{{contextPath}}/{{uri}}/{{idTicket}}

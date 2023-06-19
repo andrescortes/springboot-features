@@ -57,12 +57,26 @@ public class TicketService implements ITicketService {
 
     @Override
     public TicketResponse read(UUID id) {
-        return null;
+        TicketEntity ticket = ticketRepository.findById(id)
+            .orElseThrow(() -> new IllegalStateException("Ticket not found"));
+        return entityToResponse(ticket);
+
     }
 
     @Override
-    public TicketResponse update(UUID uuid, TicketRequest request) {
-        return null;
+    public TicketResponse update(UUID id, TicketRequest request) {
+        TicketEntity ticket = ticketRepository.findById(id)
+            .orElseThrow(() -> new IllegalStateException("Ticket not found"));
+        FlyEntity flyEntity = flyRepository.findById(request.getIdFly())
+            .orElseThrow(() -> new IllegalStateException("Fly not found"));
+
+        ticket.setFly(flyEntity);
+        ticket.setPrice(BigDecimal.valueOf(0.25));
+        ticket.setDepartureDate(LocalDateTime.now());
+        ticket.setArrivalDate(LocalDateTime.now());
+        TicketEntity saved = ticketRepository.save(ticket);
+        log.info("Ticket updated with id: {}", saved.getId());
+        return entityToResponse(saved);
     }
 
     @Override
@@ -76,14 +90,6 @@ public class TicketService implements ITicketService {
         FlyResponse flyResponse = new FlyResponse();
         BeanUtils.copyProperties(entity.getFly(), flyResponse);
         ticketResponse.setFly(flyResponse);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(ticketResponse);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(json);
         return ticketResponse;
     }
 }
