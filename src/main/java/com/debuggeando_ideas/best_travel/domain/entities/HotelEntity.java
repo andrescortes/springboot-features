@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.math.BigDecimal;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,7 @@ public class HotelEntity {
     @Column(length = 50)
     private String address;
     private Integer rating;
-    private Double price;
+    private BigDecimal price;
     @ToString.Exclude // annotation to prevent infinite loops
     @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
     @OneToMany(

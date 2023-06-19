@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.response;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,6 @@ public class HotelResponse {
     private String name;
     private String address;
     private Integer rating;
-    private Double price;
+    private BigDecimal price;
     private Set<ReservationResponse> reservation;
 }

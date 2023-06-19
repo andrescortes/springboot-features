@@ -11,6 +11,7 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
+import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class TicketService implements ITicketService {
+public class TicketServiceImpl implements ITicketService {
 
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
@@ -44,8 +45,8 @@ public class TicketService implements ITicketService {
                 .add(flyEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)))
             .fly(flyEntity)
             .customer(customerEntity)
-            .departureDate(LocalDateTime.now())
-            .arrivalDate(LocalDateTime.now())
+            .departureDate(BestTravelUtil.getRandomSoon())
+            .arrivalDate(BestTravelUtil.getRandomLater())
             .purchaseDate(LocalDateTime.now())
             .build();
         TicketEntity ticketSaved = saveTicket(
@@ -53,6 +54,44 @@ public class TicketService implements ITicketService {
         log.info("Ticket saved with id: {}", ticketSaved.getId());
 
         return entityToResponse(ticketSaved);
+    }
+
+    @Override
+    public TicketResponse read(UUID id) {
+        TicketEntity ticket = getTicketEntity(id);
+        return entityToResponse(ticket);
+
+    }
+
+    @Override
+    public TicketResponse update(UUID id, TicketRequest request) {
+        TicketEntity ticket = getTicketEntity(id);
+        FlyEntity flyEntity = getFlyEntity(request);
+
+        ticket.setFly(flyEntity);
+        ticket.setPrice(flyEntity.getPrice()
+            .add(flyEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)));
+        ticket.setDepartureDate(BestTravelUtil.getRandomSoon());
+        ticket.setArrivalDate(BestTravelUtil.getRandomLater());
+        TicketEntity saved = saveTicket(ticket);
+        log.info("Ticket updated with id: {}", saved.getId());
+        return entityToResponse(saved);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        TicketEntity ticket = getTicketEntity(id);
+        ticketRepository.delete(ticket);
+    }
+
+    @Override
+    public BigDecimal findPriceById(Long flyId) {
+        FlyEntity flyEntity = getFlyById(flyId);
+        return flyEntity.getPrice()
+            .add(flyEntity
+                .getPrice()
+                .multiply(Constant.CHARGE_PRICE_PERCENTAGE)
+            );
     }
 
     private CustomerEntity getCustomerEntity(TicketRequest request) {
@@ -69,37 +108,9 @@ public class TicketService implements ITicketService {
             .orElseThrow(() -> new IllegalStateException(Constant.ERROR_FLY_NOT_FOUND));
     }
 
-    @Override
-    public TicketResponse read(UUID id) {
-        TicketEntity ticket = getTicketEntity(id);
-        return entityToResponse(ticket);
-
-    }
-
     private TicketEntity getTicketEntity(UUID id) {
         return ticketRepository.findById(id)
             .orElseThrow(() -> new IllegalStateException(Constant.ERROR_TICKET_NOT_FOUND));
-    }
-
-    @Override
-    public TicketResponse update(UUID id, TicketRequest request) {
-        TicketEntity ticket = getTicketEntity(id);
-        FlyEntity flyEntity = getFlyEntity(request);
-
-        ticket.setFly(flyEntity);
-        ticket.setPrice(flyEntity.getPrice()
-            .add(flyEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)));
-        ticket.setDepartureDate(LocalDateTime.now());
-        ticket.setArrivalDate(LocalDateTime.now());
-        TicketEntity saved = saveTicket(ticket);
-        log.info("Ticket updated with id: {}", saved.getId());
-        return entityToResponse(saved);
-    }
-
-    @Override
-    public void delete(UUID id) {
-        TicketEntity ticket = getTicketEntity(id);
-        ticketRepository.delete(ticket);
     }
 
     private TicketResponse entityToResponse(TicketEntity entity) {
@@ -109,16 +120,6 @@ public class TicketService implements ITicketService {
         BeanUtils.copyProperties(entity.getFly(), flyResponse);
         ticketResponse.setFly(flyResponse);
         return ticketResponse;
-    }
-
-    @Override
-    public BigDecimal findPriceById(Long flyId) {
-        FlyEntity flyEntity = getFlyById(flyId);
-        return flyEntity.getPrice()
-            .add(flyEntity
-                .getPrice()
-                .multiply(Constant.CHARGE_PRICE_PERCENTAGE)
-            );
     }
 
     private FlyEntity getFlyById(Long flyId) {
