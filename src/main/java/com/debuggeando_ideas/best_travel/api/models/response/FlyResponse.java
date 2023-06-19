@@ -1,6 +1,7 @@
 package com.debuggeando_ideas.best_travel.api.models.response;
 
 import com.debuggeando_ideas.best_travel.util.AeroLineType;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,5 @@ public class FlyResponse {
     private String originName;
     private String destinyName;
     private AeroLineType aeroLine;
+    private BigDecimal price;
 }

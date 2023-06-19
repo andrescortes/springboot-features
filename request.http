@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### update Ticket
-PUT {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
+PUT {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/f879d8a5-2f02-4760-a367-ed0478f637a3
 Content-Type: application/json
 
 {
@@ -17,15 +17,16 @@ Content-Type: application/json
 }
 
 ### getTicket
-GET {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
+GET {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/f879d8a5-2f02-4760-a367-ed0478f637a3
 
 ### delete ticket
-DELETE {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
+DELETE {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}/f879d8a5-2f02-4760-a367-ed0478f637a3
 
 ### getPriceFlyById
 GET {{host}}:{{port}}/{{contextPath}}/{{uriTicket}}?flyId=3
 
-### create Reservation
+
+### createReservation
 POST {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}
 Content-Type: application/json
 
@@ -34,3 +35,53 @@ Content-Type: application/json
   "idHotel": 2,
   "totalDays": 5
 }
+
+### updateReservation
+PUT {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c
+Content-Type: application/json
+
+{
+  "idClient": "{{idClient}}",
+  "idHotel": 11,
+  "totalDays": 5
+}
+
+### getReservation
+GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c
+
+### delete reservation
+DELETE {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c
+
+### getPriceByHotelId
+GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}?flyId=3
+
+
+### getFlies
+GET {{host}}:{{port}}/{{contextPath}}/{{uriFly}}
+    ?page=2
+    &size=5
+sortType: UPPER
+
+### getFliesByLessPrice
+GET {{host}}:{{port}}/{{contextPath}}/{{uriFly}}/less-price?price=13.5
+
+### getFliesByBetweenPrice
+GET {{host}}:{{port}}/{{contextPath}}/{{uriFly}}/between-price?priceMin=10.5&priceMax=14.1
+
+### getFliesByBetweenPrice
+GET {{host}}:{{port}}/{{contextPath}}/{{uriFly}}/origin-destination?origin=Mexico&destination=Grecia
+
+### getHotels
+GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}
+    ?page=0
+    &size=3
+sortType: UPPER
+
+### getHotelsByLessPrice
+GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/less-price?price=13.5
+
+### getHotelsByBetweenPrice
+GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/between-price?priceMin=10.5&priceMax=14.1
+
+### getHotelsByRating
+GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/rating?rating=3

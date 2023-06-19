@@ -11,6 +11,8 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.ReservationRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
+import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Transactional
 @Service
@@ -47,24 +49,48 @@ public class ReservationServiceImpl implements IReservationService {
             .price(hotelEntity.getPrice()
                 .add(hotelEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE_RESERVATION)))
             .build();
-        ReservationEntity save = saveReservationEntity(reservationEntity);
-        log.info("Reservation created: {}", save.getId());
-        return entityToResponse(save);
+        ReservationEntity reservation = saveReservationEntity(reservationEntity);
+        log.info("Reservation created: {}", reservation.getId());
+        return entityToResponse(reservation);
     }
 
     @Override
     public ReservationResponse read(UUID id) {
-        return null;
+        return entityToResponse(getReservationEntity(id));
     }
 
     @Override
     public ReservationResponse update(UUID id, ReservationRequest request) {
-        return null;
+        HotelEntity hotelEntity = getHotelEntity(request.getIdHotel());
+        ReservationEntity reservationEntity = getReservationEntity(id);
+        reservationEntity.setHotel(hotelEntity);
+        reservationEntity.setTotalDays(request.getTotalDays());
+        reservationEntity.setDateTimeReservation(LocalDateTime.now());
+        reservationEntity.setDateStart(LocalDate.now());
+        reservationEntity.setDateEnd(LocalDate.now().plusDays(request.getTotalDays()));
+        reservationEntity.setPrice(
+            hotelEntity.getPrice().add(
+                hotelEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE_RESERVATION)));
+        ReservationEntity reservation = saveReservationEntity(reservationEntity);
+        log.info("Reservation updated: {}", reservation.getId());
+        return entityToResponse(reservation);
     }
 
     @Override
     public void delete(UUID id) {
+        reservationRepository.delete(getReservationEntity(id));
+    }
 
+    @Override
+    public BigDecimal findPriceById(Long idHotel) {
+        HotelEntity hotelEntity = getHotelEntity(idHotel);
+        return hotelEntity.getPrice()
+            .add(hotelEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE));
+    }
+
+    private ReservationEntity getReservationEntity(UUID id) {
+        return reservationRepository.findById(id)
+            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_RESERVATION_NOT_FOUND));
     }
 
     private ReservationEntity saveReservationEntity(ReservationEntity reservationEntity) {

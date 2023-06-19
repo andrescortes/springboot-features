@@ -10,6 +10,7 @@ public class Constant {
     public static final BigDecimal CHARGE_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
     public static final String HOTEL_NOT_FOUND = "Hotel not found";
     public static final BigDecimal CHARGE_PRICE_PERCENTAGE_RESERVATION = BigDecimal.valueOf(0.20);
+    public static final String ERROR_RESERVATION_NOT_FOUND = "Reservation not found";
 
     private Constant() {
 

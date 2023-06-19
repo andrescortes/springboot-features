@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,8 +36,7 @@ public class HotelEntity {
     private String address;
     private Integer rating;
     private BigDecimal price;
-    @ToString.Exclude // annotation to prevent infinite loops
-    @EqualsAndHashCode.Exclude // annotation to prevent infinite loops
+    @JsonIgnore
     @OneToMany(
         mappedBy = "hotel",
         cascade = CascadeType.ALL,
