@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### update Ticket
-PUT {{host}}:{{port}}/{{contextPath}}/{{uri}}/{{idTicket}}
+PUT {{host}}:{{port}}/{{contextPath}}/{{uri}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
 Content-Type: application/json
 
 {
@@ -17,4 +17,11 @@ Content-Type: application/json
 }
 
 ### getTicket
-GET {{host}}:{{port}}/{{contextPath}}/{{uri}}/{{idTicket}}
+GET {{host}}:{{port}}/{{contextPath}}/{{uri}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
+
+
+### delete ticket
+DELETE {{host}}:{{port}}/{{contextPath}}/{{uri}}/56467d4e-c429-47d8-aa62-aa6c03aebd55
+
+### getPriceFlyById
+GET {{host}}:{{port}}/{{contextPath}}/{{uri}}?flyId=3

@@ -40,7 +40,8 @@ public class TicketService implements ITicketService {
         TicketEntity ticketEntity = TicketEntity
             .builder()
             .id(UUID.randomUUID())
-            .price(flyEntity.getPrice().multiply(BigDecimal.valueOf(0.25)))
+            .price(flyEntity.getPrice()
+                .add(flyEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)))
             .fly(flyEntity)
             .customer(customerEntity)
             .departureDate(LocalDateTime.now())
@@ -86,7 +87,8 @@ public class TicketService implements ITicketService {
         FlyEntity flyEntity = getFlyEntity(request);
 
         ticket.setFly(flyEntity);
-        ticket.setPrice(BigDecimal.valueOf(0.25));
+        ticket.setPrice(flyEntity.getPrice()
+            .add(flyEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)));
         ticket.setDepartureDate(LocalDateTime.now());
         ticket.setArrivalDate(LocalDateTime.now());
         TicketEntity saved = saveTicket(ticket);
@@ -107,5 +109,20 @@ public class TicketService implements ITicketService {
         BeanUtils.copyProperties(entity.getFly(), flyResponse);
         ticketResponse.setFly(flyResponse);
         return ticketResponse;
+    }
+
+    @Override
+    public BigDecimal findPriceById(Long flyId) {
+        FlyEntity flyEntity = getFlyById(flyId);
+        return flyEntity.getPrice()
+            .add(flyEntity
+                .getPrice()
+                .multiply(Constant.CHARGE_PRICE_PERCENTAGE)
+            );
+    }
+
+    private FlyEntity getFlyById(Long flyId) {
+        return flyRepository.findById(flyId)
+            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_FLY_NOT_FOUND));
     }
 }
