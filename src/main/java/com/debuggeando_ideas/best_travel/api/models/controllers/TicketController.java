@@ -6,6 +6,7 @@ import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicket
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,14 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TicketResponse> update(@PathVariable final UUID id, @RequestBody TicketRequest request) {
+    public ResponseEntity<TicketResponse> update(@PathVariable final UUID id,
+        @RequestBody TicketRequest request) {
         return ResponseEntity.ok(ticketService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<TicketResponse> delete(@PathVariable final UUID id) {
+        ticketService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
