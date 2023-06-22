@@ -12,5 +12,6 @@ logging:
     org.hibernate.sql: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 server:
+  port: 8080
   servlet:
     context-path: /best_travel
