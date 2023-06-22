@@ -12,7 +12,6 @@ import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
-import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
@@ -35,8 +35,7 @@ public class TicketServiceImpl implements ITicketService {
     @Override
     public TicketResponse create(TicketRequest request) {
         FlyEntity flyEntity = getFlyEntity(request);
-        CustomerEntity customerEntity = getCustomerEntity(
-            request);
+        CustomerEntity customerEntity = getCustomerEntity(request);
 
         TicketEntity ticketEntity = TicketEntity
             .builder()
@@ -49,8 +48,7 @@ public class TicketServiceImpl implements ITicketService {
             .arrivalDate(BestTravelUtil.getRandomLater())
             .purchaseDate(LocalDateTime.now())
             .build();
-        TicketEntity ticketSaved = saveTicket(
-            ticketEntity);
+        TicketEntity ticketSaved = saveTicket(ticketEntity);
         log.info("Ticket saved with id: {}", ticketSaved.getId());
 
         return entityToResponse(ticketSaved);
