@@ -11,7 +11,6 @@ import com.debuggeando_ideas.best_travel.domain.entities.TourEntity;
 import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
-import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TourRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITourService;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.TourHelper;
@@ -22,6 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 @Transactional
@@ -33,7 +33,6 @@ public class TourServiceImpl implements ITourService {
     private final FlyRepository flyRepository;
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
-    private final TicketRepository ticketRepository;
     private final TourHelper tourHelper;
 
     private static Set<UUID> getTicketIds(TourEntity tourSaved) {
@@ -105,11 +104,23 @@ public class TourServiceImpl implements ITourService {
 
     @Override
     public TourResponse read(Long id) {
-        return null;
+        TourEntity tourEntity = getTourEntity(id);
+        return TourResponse.builder()
+            .id(tourEntity.getId())
+            .reservationIds(getReservationIds(tourEntity))
+            .ticketIds(getTicketIds(tourEntity))
+            .build();
+
+    }
+
+    private TourEntity getTourEntity(Long id) {
+        return tourRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Tour not found"));
     }
 
     @Override
     public void delete(Long id) {
-
+        TourEntity tourEntity = getTourEntity(id);
+        tourRepository.delete(tourEntity);
     }
 }

@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class TourEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonIgnore
     @OneToMany(
         mappedBy = "tour",
@@ -39,6 +42,7 @@ public class TourEntity {
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<TicketEntity> tickets;
+
     @JsonIgnore
     @OneToMany(
         mappedBy = "tour",
@@ -47,10 +51,17 @@ public class TourEntity {
         orphanRemoval = true //if the fly is deleted, remove all the tickets
     )
     private Set<ReservationEntity> reservations;
+
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "dni")
     private CustomerEntity customer;
 
+    @PrePersist
+    @PreRemove
+    public void updateFks() {
+        this.tickets.forEach(ticket -> ticket.setTour(this));
+        this.reservations.forEach(reservation -> reservation.setTour(this));
+    }
 
     public void addTicket(TicketEntity ticket) {
         if (Objects.isNull(this.tickets)) {
