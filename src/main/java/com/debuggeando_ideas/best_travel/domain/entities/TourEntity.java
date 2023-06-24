@@ -68,13 +68,15 @@ public class TourEntity {
             this.tickets = new HashSet<>();
         }
         this.tickets.add(ticket);
+        this.tickets.forEach(tk -> tk.setTour(this));
     }
 
     public void removeTicket(UUID id) {
-        if (Objects.isNull(this.tickets)) {
-            this.tickets = new HashSet<>();
-        }
-        this.tickets.removeIf(ticket -> ticket.getId().equals(id));
+        this.tickets.forEach(ticket -> {
+            if (ticket.getId().equals(id)) {
+                ticket.setTour(null);
+            }
+        });
     }
 
     public void updateTicket() {

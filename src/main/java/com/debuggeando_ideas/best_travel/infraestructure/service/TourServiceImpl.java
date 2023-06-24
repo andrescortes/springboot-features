@@ -45,22 +45,29 @@ public class TourServiceImpl implements ITourService {
     }
 
     @Override
-    public void removeTicket(UUID ticketId, Long tourId) {
+    public void removeTicket(Long tourId,UUID ticketId ) {
+        TourEntity tourEntity = getTourEntity(tourId);
+        tourEntity.removeTicket(ticketId);
+        tourRepository.save(tourEntity);
+    }
+
+    @Override
+    public UUID addTicket(Long tourId,Long flyId) {
+        TourEntity tourEntity = getTourEntity(tourId);
+        FlyEntity flyEntity = getFlyEntity(flyId);
+        TicketEntity ticket = tourHelper.createTicket(flyEntity, tourEntity.getCustomer());
+        tourEntity.addTicket(ticket);
+        tourRepository.save(tourEntity);
+        return ticket.getId();
+    }
+
+    @Override
+    public void removeReservation(Long tourId,UUID reservationId) {
 
     }
 
     @Override
-    public UUID addTicket(Long flyId, Long tourId) {
-        return null;
-    }
-
-    @Override
-    public void removeReservation(UUID reservationId, Long tourId) {
-
-    }
-
-    @Override
-    public UUID addReservation(Long reservationId, Long tourId) {
+    public UUID addReservation(Long tourId,Long reservationId) {
         return null;
     }
 

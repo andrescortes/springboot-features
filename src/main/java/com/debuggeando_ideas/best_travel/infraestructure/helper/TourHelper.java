@@ -64,4 +64,19 @@ public class TourHelper {
         });
         return reservationHashSet;
     }
+
+    public TicketEntity createTicket(FlyEntity fly, CustomerEntity customer) {
+        TicketEntity ticketEntity = TicketEntity.builder()
+            .id(UUID.randomUUID())
+            .price(fly.getPrice()
+                .add(fly.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE)))
+            .fly(fly)
+            .customer(customer)
+            .departureDate(BestTravelUtil.getRandomSoon())
+            .arrivalDate(BestTravelUtil.getRandomLater())
+            .purchaseDate(LocalDateTime.now())
+            .build();
+        return ticketRepository.save(ticketEntity);
+
+    }
 }
