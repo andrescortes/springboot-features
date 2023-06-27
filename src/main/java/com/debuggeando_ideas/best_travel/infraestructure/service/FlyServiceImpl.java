@@ -7,7 +7,6 @@ import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IFlySer
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import com.debuggeando_ideas.best_travel.util.SortType;
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 @Slf4j
 @AllArgsConstructor

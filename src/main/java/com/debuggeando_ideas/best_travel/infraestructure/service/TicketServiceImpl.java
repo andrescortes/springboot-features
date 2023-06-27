@@ -11,6 +11,7 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class TicketServiceImpl implements ITicketService {
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
+    private final CustomerHelper customerHelper;
 
 
     @Override
@@ -49,6 +51,7 @@ public class TicketServiceImpl implements ITicketService {
             .purchaseDate(LocalDateTime.now())
             .build();
         TicketEntity ticketSaved = saveTicket(ticketEntity);
+        customerHelper.increaseCustomerParams(customerEntity.getDni(), TicketServiceImpl.class);
         log.info("Ticket saved with id: {}", ticketSaved.getId());
 
         return entityToResponse(ticketSaved);

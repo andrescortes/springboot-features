@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -60,4 +61,24 @@ public class TourController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("/{tourId}/remove-reservation/{reservationId}")
+    public ResponseEntity<Void> deleteReservation(
+        @PathVariable Long tourId,
+        @PathVariable UUID reservationId
+    ) {
+        tourService.removeReservation(tourId, reservationId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{tourId}/add-reservation/{hotelId}")
+    public ResponseEntity<Map<String, UUID>> addReservation(
+        @PathVariable Long tourId,
+        @PathVariable Long hotelId,
+        @RequestParam Integer totalDays
+    ) {
+        UUID uuid = tourService.addReservation(tourId, hotelId, totalDays);
+        Map<String, UUID> response = new HashMap<>();
+        response.put("reservationId", uuid);
+        return ResponseEntity.ok(response);
+    }
 }

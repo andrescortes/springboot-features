@@ -13,16 +13,16 @@ import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TourRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITourService;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.TourHelper;
-import jakarta.transaction.Transactional;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
@@ -34,6 +34,7 @@ public class TourServiceImpl implements ITourService {
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
+    private final CustomerHelper customerHelper;
 
     private static Set<UUID> getTicketIds(TourEntity tourSaved) {
         return tourSaved.getTickets().stream().map(TicketEntity::getId).collect(Collectors.toSet());
@@ -45,14 +46,14 @@ public class TourServiceImpl implements ITourService {
     }
 
     @Override
-    public void removeTicket(Long tourId,UUID ticketId ) {
+    public void removeTicket(Long tourId, UUID ticketId) {
         TourEntity tourEntity = getTourEntity(tourId);
         tourEntity.removeTicket(ticketId);
         tourRepository.save(tourEntity);
     }
 
     @Override
-    public UUID addTicket(Long tourId,Long flyId) {
+    public UUID addTicket(Long tourId, Long flyId) {
         TourEntity tourEntity = getTourEntity(tourId);
         FlyEntity flyEntity = getFlyEntity(flyId);
         TicketEntity ticket = tourHelper.createTicket(flyEntity, tourEntity.getCustomer());
@@ -62,14 +63,23 @@ public class TourServiceImpl implements ITourService {
     }
 
     @Override
-    public void removeReservation(Long tourId,UUID reservationId) {
-
+    public void removeReservation(Long tourId, UUID reservationId) {
+        TourEntity tourEntity = getTourEntity(tourId);
+        tourEntity.removeReservation(reservationId);
+        tourRepository.save(tourEntity);
     }
 
     @Override
-    public UUID addReservation(Long tourId,Long reservationId) {
-        return null;
+    public UUID addReservation(Long tourId, Long hotelId, Integer totalDays) {
+        TourEntity tourEntity = getTourEntity(tourId);
+        HotelEntity hotelEntity = getHotelEntity(hotelId);
+        ReservationEntity reservationEntity = tourHelper.createReservation(hotelEntity,
+            tourEntity.getCustomer(), totalDays);
+        tourEntity.addReservation(reservationEntity);
+        tourRepository.save(tourEntity);
+        return reservationEntity.getId();
     }
+
 
     @Override
     public TourResponse create(TourRequest request) {
@@ -87,6 +97,7 @@ public class TourServiceImpl implements ITourService {
             .customer(customer)
             .build();
         TourEntity tourSaved = tourRepository.save(tourEntity);
+        customerHelper.increaseCustomerParams(customer.getDni(), TourServiceImpl.class);
         return TourResponse.builder()
             .id(tourSaved.getId())
             .reservationIds(getReservationIds(tourSaved))

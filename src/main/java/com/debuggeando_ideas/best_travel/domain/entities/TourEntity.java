@@ -33,7 +33,7 @@ public class TourEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    //no delete tickets because for type fetch is EAGER, when is LAZY its deleted
     @JsonIgnore
     @OneToMany(
         mappedBy = "tour",
@@ -79,25 +79,19 @@ public class TourEntity {
         });
     }
 
-    public void updateTicket() {
-        this.tickets.forEach(ticket -> ticket.setTour(this));
-    }
-
     public void addReservation(ReservationEntity reservation) {
         if (Objects.isNull(this.reservations)) {
             this.reservations = new HashSet<>();
         }
         this.reservations.add(reservation);
+        this.reservations.forEach(tk -> tk.setTour(this));
     }
 
     public void removeReservation(UUID id) {
-        if (Objects.isNull(this.reservations)) {
-            this.reservations = new HashSet<>();
-        }
-        this.reservations.removeIf(reservation -> reservation.getId().equals(id));
-    }
-
-    public void updateReservations() {
-        this.reservations.forEach(reservation -> reservation.setTour(this));
+        this.reservations.forEach(reservation -> {
+            if (reservation.getId().equals(id)) {
+                reservation.setTour(null);
+            }
+        });
     }
 }

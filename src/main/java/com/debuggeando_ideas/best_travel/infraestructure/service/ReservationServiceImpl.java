@@ -11,6 +11,7 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.ReservationRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ public class ReservationServiceImpl implements IReservationService {
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
+    private final CustomerHelper customerHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -51,6 +53,7 @@ public class ReservationServiceImpl implements IReservationService {
             .build();
         ReservationEntity reservation = saveReservationEntity(reservationEntity);
         log.info("Reservation created: {}", reservation.getId());
+        customerHelper.increaseCustomerParams(customerEntity.getDni(), ReservationServiceImpl.class);
         return entityToResponse(reservation);
     }
 

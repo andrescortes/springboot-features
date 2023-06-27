@@ -96,7 +96,7 @@ POST {{host}}:{{port}}/{{contextPath}}/{{uriTour}}
 Content-Type: application/json
 
 {
-  "customerId": "BBMB771012HMCRR022",
+  "customerId": "VIKI771012HMCRG093",
   "flights": [
     {"id": 1},
     {"id": 2},
@@ -112,7 +112,20 @@ Content-Type: application/json
 }
 
 ### deleteTour
-DELETE {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/2
+DELETE {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1
 
 ### getToursByRating
 GET {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/rating?rating=3
+
+
+### addTicketFromTour
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/add-ticket/1
+
+### removeTicketFromTour
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/remove-ticket/a377f26a-a882-4ac9-9c97-e5555e802850
+
+### addReservationFromTour
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/remove-reservation/c71a86fb-728e-4fd2-ab09-33e9c79681cf
+
+### removeReservationFromTour
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/add-reservation/1?totalDays=3
