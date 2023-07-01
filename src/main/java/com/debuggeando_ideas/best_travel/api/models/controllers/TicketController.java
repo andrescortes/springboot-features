@@ -3,6 +3,7 @@ package com.debuggeando_ideas.best_travel.api.models.controllers;
 import com.debuggeando_ideas.best_travel.api.models.request.TicketRequest;
 import com.debuggeando_ideas.best_travel.api.models.response.TicketResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
+import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class TicketController {
     private final ITicketService ticketService;
 
     @PostMapping
-    public ResponseEntity<TicketResponse> create(@RequestBody TicketRequest request) {
+    public ResponseEntity<TicketResponse> create(@Valid @RequestBody TicketRequest request) {
         return ResponseEntity.ok(ticketService.create(request));
     }
 
@@ -38,7 +39,7 @@ public class TicketController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TicketResponse> update(@PathVariable final UUID id,
-        @RequestBody TicketRequest request) {
+        @Valid @RequestBody TicketRequest request) {
         return ResponseEntity.ok(ticketService.update(id, request));
     }
 
