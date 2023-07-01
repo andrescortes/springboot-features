@@ -15,6 +15,8 @@ import com.debuggeando_ideas.best_travel.domain.repositories.TourRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITourService;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.TourHelper;
+import com.debuggeando_ideas.best_travel.util.enums.Tables;
+import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -107,17 +109,17 @@ public class TourServiceImpl implements ITourService {
 
     private HotelEntity getHotelEntity(Long hotelId) {
         return hotelRepository.findById(hotelId)
-            .orElseThrow(() -> new IllegalArgumentException("Hotel not found"));
+            .orElseThrow(() -> new IdNotFoundException(Tables.HOTELS.getTableName()));
     }
 
     private FlyEntity getFlyEntity(Long flyId) {
         return flyRepository.findById(flyId)
-            .orElseThrow(() -> new IllegalArgumentException("Fly not found"));
+            .orElseThrow(() -> new IllegalArgumentException(Tables.FLIES.getTableName()));
     }
 
     private CustomerEntity getCustomer(String customerId) {
         return customerRepository.findById(customerId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+            .orElseThrow(() -> new IllegalArgumentException(Tables.CUSTOMERS.getTableName()));
     }
 
     @Override
@@ -133,7 +135,7 @@ public class TourServiceImpl implements ITourService {
 
     private TourEntity getTourEntity(Long id) {
         return tourRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Tour not found"));
+            .orElseThrow(() -> new IllegalArgumentException(Tables.TOURS.getTableName()));
     }
 
     @Override

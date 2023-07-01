@@ -5,7 +5,7 @@ import com.debuggeando_ideas.best_travel.domain.entities.HotelEntity;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IHotelService;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
-import com.debuggeando_ideas.best_travel.util.SortType;
+import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;

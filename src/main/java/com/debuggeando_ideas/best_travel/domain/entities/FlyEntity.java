@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.domain.entities;
 
-import com.debuggeando_ideas.best_travel.util.AeroLineType;
+import com.debuggeando_ideas.best_travel.util.enums.AeroLineType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

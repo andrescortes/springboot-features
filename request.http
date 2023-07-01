@@ -31,9 +31,10 @@ POST {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}
 Content-Type: application/json
 
 {
-  "idClient": "{{idClient}}",
+  "idClient": "WALA771012HCRGR054",
   "idHotel": 2,
-  "totalDays": 5
+  "totalDays": 5,
+  "email": "andres@gmail.com"
 }
 
 ### updateReservation
@@ -47,7 +48,7 @@ Content-Type: application/json
 }
 
 ### getReservation
-GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c
+GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9d
 
 ### delete reservation
 DELETE {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c

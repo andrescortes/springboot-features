@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.util;
 
+import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;

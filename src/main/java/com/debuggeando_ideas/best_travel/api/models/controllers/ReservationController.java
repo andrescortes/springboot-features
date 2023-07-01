@@ -3,6 +3,7 @@ package com.debuggeando_ideas.best_travel.api.models.controllers;
 import com.debuggeando_ideas.best_travel.api.models.request.ReservationRequest;
 import com.debuggeando_ideas.best_travel.api.models.response.ReservationResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
+import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class ReservationController {
     private final IReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<ReservationResponse> create(@RequestBody ReservationRequest request) {
+    public ResponseEntity<ReservationResponse> create(@Valid @RequestBody ReservationRequest request) {
         return ResponseEntity.ok(reservationService.create(request));
     }
 
@@ -37,7 +38,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationResponse> update(@PathVariable final UUID id,
+    public ResponseEntity<ReservationResponse> update(@Valid @PathVariable final UUID id,
         @RequestBody ReservationRequest request) {
         return ResponseEntity.ok(reservationService.update(id, request));
     }

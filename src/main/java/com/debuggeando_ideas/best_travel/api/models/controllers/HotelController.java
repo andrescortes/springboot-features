@@ -2,7 +2,7 @@ package com.debuggeando_ideas.best_travel.api.models.controllers;
 
 import com.debuggeando_ideas.best_travel.api.models.response.HotelResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IHotelService;
-import com.debuggeando_ideas.best_travel.util.SortType;
+import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;

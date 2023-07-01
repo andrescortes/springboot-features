@@ -11,7 +11,10 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.ReservationRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.BlackListHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
+import com.debuggeando_ideas.best_travel.util.enums.Tables;
+import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,9 +36,11 @@ public class ReservationServiceImpl implements IReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
+        blackListHelper.isInBlackList(request.getIdClient());
         HotelEntity hotelEntity = getHotelEntity(request.getIdHotel());
         CustomerEntity customerEntity = getCustomerEntity(request.getIdClient());
 
@@ -93,7 +98,7 @@ public class ReservationServiceImpl implements IReservationService {
 
     private ReservationEntity getReservationEntity(UUID id) {
         return reservationRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_RESERVATION_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.RESERVATIONS.getTableName()));
     }
 
     private ReservationEntity saveReservationEntity(ReservationEntity reservationEntity) {
@@ -102,13 +107,12 @@ public class ReservationServiceImpl implements IReservationService {
 
     private CustomerEntity getCustomerEntity(String idCustomer) {
         return customerRepository.findById(idCustomer)
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_CUSTOMER_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.CUSTOMERS.getTableName()));
     }
 
     private HotelEntity getHotelEntity(Long idHotel) {
         return hotelRepository.findById(idHotel)
-            .orElseThrow(() -> new IllegalStateException(
-                Constant.HOTEL_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.HOTELS.getTableName()));
     }
 
     private ReservationResponse entityToResponse(ReservationEntity entity) {

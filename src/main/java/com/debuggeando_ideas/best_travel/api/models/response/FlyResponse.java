@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.response;
 
-import com.debuggeando_ideas.best_travel.util.AeroLineType;
+import com.debuggeando_ideas.best_travel.util.enums.AeroLineType;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

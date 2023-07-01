@@ -11,8 +11,11 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.BlackListHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
+import com.debuggeando_ideas.best_travel.util.enums.Tables;
+import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,10 +35,12 @@ public class TicketServiceImpl implements ITicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
 
     @Override
     public TicketResponse create(TicketRequest request) {
+        blackListHelper.isInBlackList(request.getIdClient());
         FlyEntity flyEntity = getFlyEntity(request);
         CustomerEntity customerEntity = getCustomerEntity(request);
 
@@ -97,7 +102,7 @@ public class TicketServiceImpl implements ITicketService {
 
     private CustomerEntity getCustomerEntity(TicketRequest request) {
         return customerRepository.findById(request.getIdClient())
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_CUSTOMER_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.CUSTOMERS.getTableName()));
     }
 
     private TicketEntity saveTicket(TicketEntity ticketEntity) {
@@ -106,12 +111,12 @@ public class TicketServiceImpl implements ITicketService {
 
     private FlyEntity getFlyEntity(TicketRequest request) {
         return flyRepository.findById(request.getIdFly())
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_FLY_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.FLIES.getTableName()));
     }
 
     private TicketEntity getTicketEntity(UUID id) {
         return ticketRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_TICKET_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.TICKETS.getTableName()));
     }
 
     private TicketResponse entityToResponse(TicketEntity entity) {
@@ -125,6 +130,6 @@ public class TicketServiceImpl implements ITicketService {
 
     private FlyEntity getFlyById(Long flyId) {
         return flyRepository.findById(flyId)
-            .orElseThrow(() -> new IllegalStateException(Constant.ERROR_FLY_NOT_FOUND));
+            .orElseThrow(() -> new IdNotFoundException(Tables.FLIES.getTableName()));
     }
 }

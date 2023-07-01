@@ -5,7 +5,7 @@ import com.debuggeando_ideas.best_travel.domain.entities.FlyEntity;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IFlyService;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
-import com.debuggeando_ideas.best_travel.util.SortType;
+import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Collectors;
