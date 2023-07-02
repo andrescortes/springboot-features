@@ -7,6 +7,15 @@ spring:
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 5
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${APP_USERNAME_MAIL}
+    password: ${APP_KEY_MAIL}
+    properties:
+      mail.transport.protocol: smtp
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 logging:
   level:
     org.hibernate.sql: DEBUG
