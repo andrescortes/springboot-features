@@ -13,7 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,8 +112,13 @@ public class ReservationController {
         description = "Get a reservation price"
     )
     @GetMapping
-    public ResponseEntity<Map<String, BigDecimal>> getFlyPrice(@RequestParam final Long flyId) {
+    public ResponseEntity<Map<String, BigDecimal>> getReservationPrice(
+        @RequestHeader(required = false) Currency currency,
+        @RequestParam final Long idHotel) {
+        if(Objects.isNull(currency)) {
+            currency = Currency.getInstance("USD");
+        }
         return ResponseEntity.ok(
-            Collections.singletonMap("hotelPrice", reservationService.findPriceById(flyId)));
+            Collections.singletonMap("hotelPrice", reservationService.findPriceById(idHotel, currency)));
     }
 }

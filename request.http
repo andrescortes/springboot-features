@@ -54,7 +54,8 @@ GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5
 DELETE {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}/9081b8fd-10a0-481b-89e5-42b0a3e9ba9c
 
 ### getPriceByHotelId
-GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}?flyId=3
+GET {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}?idHotel=2
+currency: COP
 
 
 ### getFlies

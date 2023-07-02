@@ -11,10 +11,13 @@ import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.ReservationRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
+import com.debuggeando_ideas.best_travel.infraestructure.dto.CurrencyDTO;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.ApiCurrencyConnectorHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.BlackListHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
 import com.debuggeando_ideas.best_travel.util.enums.Tables;
 import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
+import java.util.Currency;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,6 +40,7 @@ public class ReservationServiceImpl implements IReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -90,10 +94,17 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
-    public BigDecimal findPriceById(Long idHotel) {
+    public BigDecimal findPriceById(Long idHotel, Currency currency) {
         HotelEntity hotelEntity = getHotelEntity(idHotel);
-        return hotelEntity.getPrice()
+        BigDecimal priceInDollars = hotelEntity.getPrice()
             .add(hotelEntity.getPrice().multiply(Constant.CHARGE_PRICE_PERCENTAGE));
+        if (currency.equals(Currency.getInstance("USD"))) {
+            return priceInDollars;
+
+        }
+        CurrencyDTO currencyDTO = apiCurrencyConnectorHelper.getCurrency(currency);
+        log.info("Currency: {}", currency);
+        return priceInDollars.multiply(currencyDTO.getRates().get(currency));
     }
 
     private ReservationEntity getReservationEntity(UUID id) {
