@@ -13,11 +13,13 @@ import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITicketService;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.BlackListHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.EmailHelper;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import com.debuggeando_ideas.best_travel.util.enums.Tables;
 import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +38,7 @@ public class TicketServiceImpl implements ITicketService {
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
-
+    private final EmailHelper emailHelper;
 
     @Override
     public TicketResponse create(TicketRequest request) {
@@ -58,7 +60,9 @@ public class TicketServiceImpl implements ITicketService {
         TicketEntity ticketSaved = saveTicket(ticketEntity);
         customerHelper.increaseCustomerParams(customerEntity.getDni(), TicketServiceImpl.class);
         log.info("Ticket saved with id: {}", ticketSaved.getId());
-
+        if (Objects.nonNull(request.getEmail())){
+            emailHelper.sendMail(request.getEmail(), customerEntity.getFullName(),Tables.TICKETS.getTableName());
+        }
         return entityToResponse(ticketSaved);
     }
 

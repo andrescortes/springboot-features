@@ -14,11 +14,13 @@ import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.domain.repositories.TourRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.ITourService;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.EmailHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.TourHelper;
 import com.debuggeando_ideas.best_travel.util.enums.Tables;
 import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,6 +39,7 @@ public class TourServiceImpl implements ITourService {
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
+    private final EmailHelper emailHelper;
 
     private static Set<UUID> getTicketIds(TourEntity tourSaved) {
         return tourSaved.getTickets().stream().map(TicketEntity::getId).collect(Collectors.toSet());
@@ -100,6 +103,10 @@ public class TourServiceImpl implements ITourService {
             .build();
         TourEntity tourSaved = tourRepository.save(tourEntity);
         customerHelper.increaseCustomerParams(customer.getDni(), TourServiceImpl.class);
+        if (Objects.nonNull(request.getEmail())){
+            emailHelper.sendMail(request.getEmail(), customer.getFullName(),Tables.TOURS.getTableName());
+        }
+
         return TourResponse.builder()
             .id(tourSaved.getId())
             .reservationIds(getReservationIds(tourSaved))

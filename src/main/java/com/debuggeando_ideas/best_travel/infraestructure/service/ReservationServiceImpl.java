@@ -15,9 +15,11 @@ import com.debuggeando_ideas.best_travel.infraestructure.dto.CurrencyDTO;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.ApiCurrencyConnectorHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.BlackListHelper;
 import com.debuggeando_ideas.best_travel.infraestructure.helper.CustomerHelper;
+import com.debuggeando_ideas.best_travel.infraestructure.helper.EmailHelper;
 import com.debuggeando_ideas.best_travel.util.enums.Tables;
 import com.debuggeando_ideas.best_travel.util.exceptions.IdNotFoundException;
 import java.util.Currency;
+import java.util.Objects;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,6 +43,7 @@ public class ReservationServiceImpl implements IReservationService {
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
     private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -63,6 +66,9 @@ public class ReservationServiceImpl implements IReservationService {
         ReservationEntity reservation = saveReservationEntity(reservationEntity);
         log.info("Reservation created: {}", reservation.getId());
         customerHelper.increaseCustomerParams(customerEntity.getDni(), ReservationServiceImpl.class);
+        if(Objects.nonNull(request.getEmail())){
+            emailHelper.sendMail(request.getEmail(), customerEntity.getFullName(),Tables.RESERVATIONS.getTableName());
+        }
         return entityToResponse(reservation);
     }
 

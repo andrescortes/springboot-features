@@ -31,10 +31,10 @@ POST {{host}}:{{port}}/{{contextPath}}/{{uriReservation}}
 Content-Type: application/json
 
 {
-  "idClient": "WALA771012HCRGR054",
+  "idClient": "VIKI771012HMCRG093",
   "idHotel": 2,
   "totalDays": 5,
-  "email": "andres@gmail.com"
+  "email": "miguel.cortes.dev@gmail.com"
 }
 
 ### updateReservation

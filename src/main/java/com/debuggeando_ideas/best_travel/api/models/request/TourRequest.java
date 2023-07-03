@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,6 @@ public class TourRequest {
     private Set<TourFlyRequest> flights;
     @Size(min = 1, message = "The field hotels must be at least 1")
     private Set<TourHotelRequest> hotels;
+    @Email
+    private String email;
 }
