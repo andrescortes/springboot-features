@@ -3,6 +3,7 @@ package com.debuggeando_ideas.best_travel.api.models.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder(toBuilder = true)
-public class TicketResponse {
+public class TicketResponse implements Serializable {
 
     private UUID id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")

@@ -1,6 +1,7 @@
 package com.debuggeando_ideas.best_travel.infraestructure.service;
 
 import com.debuggeando_ideas.best_travel.api.models.response.FlyResponse;
+import com.debuggeando_ideas.best_travel.domain.app.Constant;
 import com.debuggeando_ideas.best_travel.domain.entities.FlyEntity;
 import com.debuggeando_ideas.best_travel.domain.repositories.FlyRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IFlyService;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,6 +36,7 @@ public class FlyServiceImpl implements IFlyService {
         return flyEntities.map(this::entityToResponse);
     }
 
+    @Cacheable(value = Constant.FLY_CACHE_NAME)
     @Override
     public Set<FlyResponse> readLessPrice(BigDecimal price) {
         return flyRepository
@@ -43,6 +46,7 @@ public class FlyServiceImpl implements IFlyService {
             .collect(Collectors.toSet());
     }
 
+    @Cacheable(value = Constant.FLY_CACHE_NAME)
     @Override
     public Set<FlyResponse> readBetweenPrice(BigDecimal priceMin, BigDecimal priceMax) {
         return flyRepository
@@ -52,6 +56,7 @@ public class FlyServiceImpl implements IFlyService {
             .collect(Collectors.toSet());
     }
 
+    @Cacheable(value = Constant.FLY_CACHE_NAME)
     @Override
     public Set<FlyResponse> readByOriginAndDestination(String origin, String destination) {
         return flyRepository

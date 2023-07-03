@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.response;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ErrorResponse extends BaseErrorResponse {
+public class ErrorResponse extends BaseErrorResponse implements Serializable {
 
     private String error;
 }

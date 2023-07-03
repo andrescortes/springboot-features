@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
 
-  db:
+  postgres:
     image: postgres:15.2
-    container_name: best_travel
+    container_name: postgres
     restart: always
     volumes:
       - ./db/sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
@@ -16,13 +16,13 @@ services:
     ports:
       - "5432:5432"
 
-#  cache-db:
-#    image: redis:6.2-alpine
-#    container_name: best_travel_cache
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    command: redis-server --loglevel warning --requirepass debuggeandoideas
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel warning --requirepass development
 #
 #  document-db:
 #    image: mongo:6.0.4

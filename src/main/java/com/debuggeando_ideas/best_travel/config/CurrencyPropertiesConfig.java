@@ -7,11 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+@Getter
+@Setter
 @Configuration
 @ConfigurationProperties(prefix = "api")
 @PropertySource(value = "classpath:configs/api-currency.properties")
-@Getter
-@Setter
 public class CurrencyPropertiesConfig {
 
     @Value("${API_KEY}")

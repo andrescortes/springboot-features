@@ -84,7 +84,7 @@ sortType: UPPER
 GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/less-price?price=13.5
 
 ### getHotelsByBetweenPrice
-GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/between-price?priceMin=10.5&priceMax=14.1
+GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/between-price?priceMin=10.5&priceMax=70.1
 
 ### getHotelsByRating
 GET {{host}}:{{port}}/{{contextPath}}/{{uriHotel}}/rating?rating=3

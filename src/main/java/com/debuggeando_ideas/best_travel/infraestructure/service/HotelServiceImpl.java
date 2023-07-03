@@ -1,6 +1,7 @@
 package com.debuggeando_ideas.best_travel.infraestructure.service;
 
 import com.debuggeando_ideas.best_travel.api.models.response.HotelResponse;
+import com.debuggeando_ideas.best_travel.domain.app.Constant;
 import com.debuggeando_ideas.best_travel.domain.entities.HotelEntity;
 import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IHotelService;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,6 +36,7 @@ public class HotelServiceImpl implements IHotelService {
         return hotelEntities.map(this::entityToResponse);
     }
 
+    @Cacheable(value = Constant.HOTEL_CACHE_NAME)
     @Override
     public Set<HotelResponse> readLessPrice(BigDecimal price) {
         return hotelRepository
@@ -43,6 +46,7 @@ public class HotelServiceImpl implements IHotelService {
             .collect(Collectors.toSet());
     }
 
+    @Cacheable(value = Constant.HOTEL_CACHE_NAME)
     @Override
     public Set<HotelResponse> readBetweenPrice(BigDecimal priceMin, BigDecimal priceMax) {
         return hotelRepository
@@ -52,6 +56,7 @@ public class HotelServiceImpl implements IHotelService {
             .collect(Collectors.toSet());
     }
 
+    @Cacheable(value = Constant.HOTEL_CACHE_NAME)
     @Override
     public Set<HotelResponse> readGreaterThanRating(Integer rating) {
         return hotelRepository

@@ -1,5 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.response;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder(toBuilder = true)
-public class HotelResponse {
+public class HotelResponse implements Serializable {
 
     private Long id;
     private String name;
