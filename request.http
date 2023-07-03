@@ -135,3 +135,16 @@ PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/add-reservation/1?totalDay
 
 ### getReport
 GET {{host}}:{{port}}/{{contextPath}}/{{uriReport}}
+
+
+### getUsers
+GET {{host}}:{{port}}/{{contextPath}}/{{uriUser}}
+
+### enabled or disabled user
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriUser}}/enabled-or-disabled?username=ragnar777
+
+### add role to user
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriUser}}/add-role?username=ragnar777&role=ROLE_ADMIN
+
+### remove role to user
+PATCH {{host}}:{{port}}/{{contextPath}}/{{uriUser}}/remove-role?username=ragnar777&role=ROLE_ADMIN

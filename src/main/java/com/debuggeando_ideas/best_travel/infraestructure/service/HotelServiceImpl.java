@@ -2,8 +2,8 @@ package com.debuggeando_ideas.best_travel.infraestructure.service;
 
 import com.debuggeando_ideas.best_travel.api.models.response.HotelResponse;
 import com.debuggeando_ideas.best_travel.domain.app.Constant;
-import com.debuggeando_ideas.best_travel.domain.entities.HotelEntity;
-import com.debuggeando_ideas.best_travel.domain.repositories.HotelRepository;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.HotelEntity;
+import com.debuggeando_ideas.best_travel.domain.repositories.jpa.HotelRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IHotelService;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import com.debuggeando_ideas.best_travel.util.enums.SortType;

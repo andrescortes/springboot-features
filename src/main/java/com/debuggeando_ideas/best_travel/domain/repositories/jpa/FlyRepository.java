@@ -1,6 +1,6 @@
-package com.debuggeando_ideas.best_travel.domain.repositories;
+package com.debuggeando_ideas.best_travel.domain.repositories.jpa;
 
-import com.debuggeando_ideas.best_travel.domain.entities.FlyEntity;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.FlyEntity;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Set;

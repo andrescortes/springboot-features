@@ -1,12 +1,11 @@
 package com.debuggeando_ideas.best_travel.infraestructure.service;
 
 import com.debuggeando_ideas.best_travel.domain.app.Constant;
-import com.debuggeando_ideas.best_travel.domain.entities.CustomerEntity;
-import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.CustomerEntity;
+import com.debuggeando_ideas.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReportService;
 import com.debuggeando_ideas.best_travel.util.exceptions.FileXLSXNotFoundException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;

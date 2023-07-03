@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.infraestructure.helper;
 
-import com.debuggeando_ideas.best_travel.domain.repositories.CustomerRepository;
+import com.debuggeando_ideas.best_travel.domain.repositories.jpa.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

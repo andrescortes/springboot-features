@@ -1,13 +1,13 @@
 package com.debuggeando_ideas.best_travel.infraestructure.helper;
 
 import com.debuggeando_ideas.best_travel.domain.app.Constant;
-import com.debuggeando_ideas.best_travel.domain.entities.CustomerEntity;
-import com.debuggeando_ideas.best_travel.domain.entities.FlyEntity;
-import com.debuggeando_ideas.best_travel.domain.entities.HotelEntity;
-import com.debuggeando_ideas.best_travel.domain.entities.ReservationEntity;
-import com.debuggeando_ideas.best_travel.domain.entities.TicketEntity;
-import com.debuggeando_ideas.best_travel.domain.repositories.ReservationRepository;
-import com.debuggeando_ideas.best_travel.domain.repositories.TicketRepository;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.CustomerEntity;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.FlyEntity;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.HotelEntity;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.ReservationEntity;
+import com.debuggeando_ideas.best_travel.domain.entities.jpa.TicketEntity;
+import com.debuggeando_ideas.best_travel.domain.repositories.jpa.ReservationRepository;
+import com.debuggeando_ideas.best_travel.domain.repositories.jpa.TicketRepository;
 import com.debuggeando_ideas.best_travel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;

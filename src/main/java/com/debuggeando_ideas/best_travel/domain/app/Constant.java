@@ -19,6 +19,7 @@ public class Constant {
     public static final String HOTEL_CACHE_NAME = "hotels";
     public static final String FLY_CACHE_NAME = "flights";
     public static final String SCHEDULED_RESET_CACHE = "0 0 0 * * ?";
+    public static final String USERNAME_NOT_FOUND = "Username not found";
 
     private Constant() {
 
