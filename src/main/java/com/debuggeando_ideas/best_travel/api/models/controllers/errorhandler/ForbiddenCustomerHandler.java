@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class ForbiddenCustomerHandler {
 
-
     @ExceptionHandler(ForbiddenCustomerException.class)
     public BaseErrorResponse handlerForbiddenCustomerException(ForbiddenCustomerException ex) {
         return ErrorResponse.builder()

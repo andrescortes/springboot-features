@@ -131,3 +131,7 @@ PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/remove-reservation/c71a86f
 
 ### removeReservationFromTour
 PATCH {{host}}:{{port}}/{{contextPath}}/{{uriTour}}/1/add-reservation/1?totalDays=3
+
+
+### getReport
+GET {{host}}:{{port}}/{{contextPath}}/{{uriReport}}
