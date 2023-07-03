@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.util.exceptions;
 
-public class UsernameNotFoundException extends RuntimeException {
+public class UsernameDocumentNotFoundException extends RuntimeException {
 
     /**
      * Constructs a new runtime exception with the specified detail message. The cause is not
@@ -9,7 +9,7 @@ public class UsernameNotFoundException extends RuntimeException {
      * @param message the detail message. The detail message is saved for later retrieval by the
      *                {@link #getMessage()} method.
      */
-    public UsernameNotFoundException(String message) {
+    public UsernameDocumentNotFoundException(String message) {
         super(message);
     }
 }

@@ -1,7 +1,6 @@
 package com.debuggeando_ideas.best_travel.api.models.controllers;
 
 import com.debuggeando_ideas.best_travel.api.models.request.ReservationRequest;
-import com.debuggeando_ideas.best_travel.api.models.response.BaseErrorResponse;
 import com.debuggeando_ideas.best_travel.api.models.response.ErrorResponse;
 import com.debuggeando_ideas.best_travel.api.models.response.ReservationResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IReservationService;
@@ -115,10 +114,11 @@ public class ReservationController {
     public ResponseEntity<Map<String, BigDecimal>> getReservationPrice(
         @RequestHeader(required = false) Currency currency,
         @RequestParam final Long idHotel) {
-        if(Objects.isNull(currency)) {
+        if (Objects.isNull(currency)) {
             currency = Currency.getInstance("USD");
         }
         return ResponseEntity.ok(
-            Collections.singletonMap("hotelPrice", reservationService.findPriceById(idHotel, currency)));
+            Collections.singletonMap("hotelPrice",
+                reservationService.findPriceById(idHotel, currency)));
     }
 }

@@ -1,7 +1,7 @@
 package com.debuggeando_ideas.best_travel.api.models.controllers;
 
 import com.debuggeando_ideas.best_travel.domain.entities.documents.AppUserDocument;
-import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IModifyUserService;
+import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IAppUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Collections;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AppUserController {
 
-    private final IModifyUserService modifyUserService;
+    private final IAppUserService modifyUserService;
 
     @Operation(
         summary = "Enable or disable a user",
