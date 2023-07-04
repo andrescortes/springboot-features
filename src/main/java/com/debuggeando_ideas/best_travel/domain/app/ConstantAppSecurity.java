@@ -19,7 +19,9 @@ public class ConstantAppSecurity {
         "/report/**"
     };
     public static final String LOGIN_RESOURCE = "/login";
-    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_ADMIN = "write";
+    public static final String APPLICATION_OWNER = "Developer improvement";
+
     private ConstantAppSecurity() {
 
     }
