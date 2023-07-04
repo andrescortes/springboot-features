@@ -117,7 +117,7 @@ public class SecurityConfig {
             .requestMatchers(ConstantAppSecurity.USER_RESOURCES)
             .authenticated()
             .requestMatchers(ConstantAppSecurity.ADMIN_RESOURCES)
-            .hasRole(ConstantAppSecurity.ROLE_ADMIN)
+            .hasAuthority(ConstantAppSecurity.ROLE_ADMIN)// authorities such as SCOPE_read, SCOPE_write, remove prefix for example write, read
             .and()
             .oauth2ResourceServer()
             .jwt();
