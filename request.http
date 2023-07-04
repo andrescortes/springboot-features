@@ -60,7 +60,7 @@ currency: COP
 
 ### getFlies
 GET {{host}}:{{port}}/{{contextPath}}/{{uriFly}}
-    ?page=2
+    ?page=0
     &size=5
 sortType: UPPER
 

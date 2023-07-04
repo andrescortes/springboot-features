@@ -2,6 +2,7 @@ package com.debuggeando_ideas.best_travel.api.models.controllers;
 
 import com.debuggeando_ideas.best_travel.api.models.response.FlyResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IFlyService;
+import com.debuggeando_ideas.best_travel.util.anotation.Notification;
 import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +30,7 @@ public class FlyController {
         summary = "Read all flights",
         description = "Read all flights"
     )
+    @Notification
     @GetMapping
     public ResponseEntity<Page<FlyResponse>> findAll(
         @RequestParam Integer page,

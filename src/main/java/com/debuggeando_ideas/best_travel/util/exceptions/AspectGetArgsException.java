@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.util.exceptions;
 
-public class ConverterStringToHtmlException extends RuntimeException {
+public class AspectGetArgsException extends RuntimeException {
 
     /**
      * Constructs a new runtime exception with the specified detail message. The cause is not
@@ -9,7 +9,7 @@ public class ConverterStringToHtmlException extends RuntimeException {
      * @param message the detail message. The detail message is saved for later retrieval by the
      *                {@link #getMessage()} method.
      */
-    public ConverterStringToHtmlException(String message) {
+    public AspectGetArgsException(String message) {
         super(message);
     }
 }

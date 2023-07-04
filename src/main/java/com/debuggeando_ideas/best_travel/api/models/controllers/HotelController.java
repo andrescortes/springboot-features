@@ -2,6 +2,7 @@ package com.debuggeando_ideas.best_travel.api.models.controllers;
 
 import com.debuggeando_ideas.best_travel.api.models.response.HotelResponse;
 import com.debuggeando_ideas.best_travel.infraestructure.abstractservice.IHotelService;
+import com.debuggeando_ideas.best_travel.util.anotation.Notification;
 import com.debuggeando_ideas.best_travel.util.enums.SortType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +26,7 @@ public class HotelController {
 
     private final IHotelService hotelService;
 
+    @Notification
     @Operation(
         summary = "Read all hotels",
         description = "Read all hotels"

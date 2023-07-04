@@ -1,6 +1,6 @@
 package com.debuggeando_ideas.best_travel.util.exceptions;
 
-public class ConverterStringToHtmlException extends RuntimeException {
+public class WriterNotCompleteException extends RuntimeException {
 
     /**
      * Constructs a new runtime exception with the specified detail message. The cause is not
@@ -9,7 +9,7 @@ public class ConverterStringToHtmlException extends RuntimeException {
      * @param message the detail message. The detail message is saved for later retrieval by the
      *                {@link #getMessage()} method.
      */
-    public ConverterStringToHtmlException(String message) {
+    public WriterNotCompleteException(String message) {
         super(message);
     }
 }
